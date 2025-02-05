@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'admin',
         ],
+        'peminjam' => [ // Tambahkan ini
+            'driver' => 'session',
+            'provider' => 'peminjam',
+        ],
     ],
 
     /*
@@ -63,6 +67,10 @@ return [
         'admin' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\Admin::class),
+        ],
+        'peminjam' => [ // Tambahkan ini
+            'driver' => 'eloquent',
+            'model' => App\Models\Peminjam::class,
         ],
 
         // 'users' => [

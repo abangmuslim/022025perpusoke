@@ -95,8 +95,28 @@
                         <a class="dropdown-item" href="{{ route('admin.create') }}">Tambah</a> <!-- Mengarahkan ke halaman admin create -->
                         <a class="dropdown-item" href="#">Tampil</a> <!-- Dibiarkan kosong atau disesuaikan nanti -->
                     </div>
-
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Peminjam</a>
+                    <div class="dropdown-menu">
+                        @guest('peminjam')
+                        <a class="dropdown-item" href="{{ route('peminjam.login') }}">Login Peminjam</a>
+                        <a class="dropdown-item" href="{{ route('peminjam.register') }}">Registrasi Peminjam</a>
+                        @else
+                        <a class="dropdown-item" href="{{ route('peminjam.index') }}">Daftar Peminjam</a>
+                        <a class="dropdown-item" href="{{ route('peminjam.create') }}">Tambah Peminjam</a>
+                        <a class="dropdown-item" href="{{ route('peminjam.logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('peminjam.logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                        @endguest
+                    </div>
+                </li>
+
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Buku</a>
                     <div class="dropdown-menu">
@@ -105,14 +125,7 @@
                         <a class="dropdown-item" href="#">Tampil</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Peminjam</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Index</a>
-                        <a class="dropdown-item" href="#">Tambah</a>
-                        <a class="dropdown-item" href="#">Tampil</a>
-                    </div>
-                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Peminjaman</a>
                     <div class="dropdown-menu">

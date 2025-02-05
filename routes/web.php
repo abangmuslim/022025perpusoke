@@ -2,9 +2,11 @@
 
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PeminjamController;
+use App\Http\Controllers\Auth\AuthPeminjamController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -34,3 +36,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [AdminController::class, 'showProfile'])->name('profile');
 });
 
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/peminjam', [PeminjamController::class, 'index'])->name('peminjam.index');
+    Route::get('/peminjam/create', [PeminjamController::class, 'create'])->name('peminjam.create');
+    Route::post('/peminjam', [PeminjamController::class, 'store'])->name('peminjam.store');
+    Route::get('/peminjam/{id}', [PeminjamController::class, 'show'])->name('peminjam.show');
+    Route::get('/peminjam/{id}/edit', [PeminjamController::class, 'edit'])->name('peminjam.edit');
+    Route::put('/peminjam/{id}', [PeminjamController::class, 'update'])->name('peminjam.update');
+    Route::delete('/peminjam/{id}', [PeminjamController::class, 'destroy'])->name('peminjam.destroy');
+    Route::put('/peminjam/{id}/approve', [PeminjamController::class, 'approve'])->name('peminjam.approve');
+    Route::put('/peminjam/{id}/reject', [PeminjamController::class, 'reject'])->name('peminjam.reject');
+});
+
+
+
+Route::get('/peminjam/login', [AuthPeminjamController::class, 'showLoginForm'])->name('peminjam.login');
+Route::post('/peminjam/login', [AuthPeminjamController::class, 'login'])->name('peminjam.login.submit');
+Route::get('/peminjam/register', [AuthPeminjamController::class, 'showRegisterForm'])->name('peminjam.register');
+Route::post('/peminjam/register', [AuthPeminjamController::class, 'register'])->name('peminjam.register.submit');
+Route::post('/peminjam/logout', [AuthPeminjamController::class, 'logout'])->name('peminjam.logout');
