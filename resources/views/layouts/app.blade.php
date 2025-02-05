@@ -99,20 +99,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Peminjam</a>
                     <div class="dropdown-menu">
-                        @guest('peminjam')
-                        <a class="dropdown-item" href="{{ route('peminjam.login') }}">Login Peminjam</a>
-                        <a class="dropdown-item" href="{{ route('peminjam.register') }}">Registrasi Peminjam</a>
-                        @else
+                        <a class="dropdown-item" href="{{ route('login') }}">Login Peminjam</a>
+                        <a class="dropdown-item" href="{{ route('register') }}">Registrasi Peminjam</a>
                         <a class="dropdown-item" href="{{ route('peminjam.index') }}">Daftar Peminjam</a>
                         <a class="dropdown-item" href="{{ route('peminjam.create') }}">Tambah Peminjam</a>
-                        <a class="dropdown-item" href="{{ route('peminjam.logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
-                        <form id="logout-form" action="{{ route('peminjam.logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                        @endguest
                     </div>
                 </li>
 
@@ -152,7 +142,7 @@
                     <span class="badge badge-success">{{ ucfirst(Auth::user()->role) }}</span> <!-- Mengganti status dengan role -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ route('profile') }}">Profil</a>
+                    <a class="dropdown-item" href="{{ route('admin.profile') }}">Profil</a>
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf

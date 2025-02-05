@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | AdminLTE</title>
+    <title>Register | AdminLTE</title>
 
     <!-- AdminLTE & Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
@@ -26,16 +26,9 @@
 
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Masukkan Username dan Password</p>
+                <p class="login-box-msg">Daftar Akun</p>
 
-                <!-- Menampilkan Error Login -->
-                @if (session('loginError'))
-                <div class="alert alert-danger">
-                    {{ session('loginError') }}
-                </div>
-                @endif
-
-                <!-- Menampilkan Validasi Form -->
+                <!-- Menampilkan Error -->
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -46,12 +39,12 @@
                 </div>
                 @endif
 
-                <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="namaadmin">Nama Lengkap</label>
-                            <input type="text" name="namaadmin" class="form-control" placeholder="Masukkan Nama" required>
+                            <label for="nama">Nama Lengkap</label>
+                            <input type="text" name="nama" class="form-control" placeholder="Masukkan Nama" required>
                         </div>
 
                         <div class="form-group">
@@ -62,6 +55,15 @@
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Masukkan Password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role">Pilih Role</label>
+                            <select name="role" class="form-control" required>
+                                <option value="">-- Pilih Role --</option>
+                                <option value="admin">Admin</option>
+                                <option value="peminjam">Peminjam</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -76,13 +78,11 @@
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-block">Daftar</button>
 
-                        <!-- Tautan kembali ke halaman login -->
                         <p class="mt-3 text-center">
-                            Kembali ke halaman
+                            Sudah punya akun?
                             <a href="{{ route('login') }}" class="text-primary font-weight-bold">LOGIN</a>
                         </p>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -91,7 +91,8 @@
     <!-- AdminLTE & Bootstrap JS -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('dist/js/adminlte.min.js') }}">
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script>
         $(document).ready(function() {
             bsCustomFileInput.init();
         });
