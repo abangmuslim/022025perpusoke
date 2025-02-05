@@ -11,7 +11,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Route login dan register untuk Admin & Peminjam (Menggunakan 1 AuthController)
+// Route login dan register untuk Admin, Petugas & Peminjam
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -23,7 +23,7 @@ Route::post('/register', [AuthController::class, 'registerStore'])->name('regist
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Group untuk Admin
+    // Group untuk Admin & Petugas (Karena petugas ada di tabel admin)
     Route::prefix('admin')->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin.index');
         Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
@@ -35,7 +35,6 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{id}/approve', [AdminController::class, 'approve'])->name('admin.approve');
         Route::put('/{id}/reject', [AdminController::class, 'reject'])->name('admin.reject');
         Route::get('/profile', [AdminController::class, 'showProfile'])->name('admin.profile');
-        
     });
 
     // Group untuk Peminjam

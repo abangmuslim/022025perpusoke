@@ -26,7 +26,10 @@ class CreateLibraryTables extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->enum('status', ['pending', 'setujui', 'tolak'])->default('pending');
+            $table->enum('keterangan', ['siswa', 'guru', 'umum']);
+            $table->string('alamat');
             $table->timestamp('setujui')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
 

@@ -18,7 +18,7 @@
                     <th>Status</th>
                     <th>Role</th>
                     <th>Foto</th>
-                    <th>Registrasi</th>
+                    <th>Confirm</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -77,13 +77,14 @@
                     <td>
                         <a href="{{ route('admin.show', $admin->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                         <a href="{{ route('admin.edit', $admin->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                        <form id="delete-form-{{ $admin->id }}" action="{{ route('admin.destroy', $admin->id) }}" method="POST" style="display:inline;">
+                        <form id="delete-form-{{ $admin->id }}" action="{{ route('admin.destroy', $admin->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $admin->id }})">
-                                <i class="fas fa-trash"></i>
+                            <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="{{ $admin->id }}">
+                                <i class="fas fa-trash"></i> <!-- Hanya ikon, tanpa teks -->
                             </button>
                         </form>
+
                     </td>
                 </tr>
                 @endforeach
@@ -92,22 +93,3 @@
     </div>
 </div>
 @endsection
-
-<script>
-    function confirmDelete(adminId) {
-        Swal.fire({
-            title: 'Apakah Anda yakin?',
-            text: "Data admin akan dihapus secara permanen!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('delete-form-' + adminId).submit();
-            }
-        });
-    }
-</script>

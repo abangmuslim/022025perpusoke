@@ -15,7 +15,11 @@
                     <tr>
                         <th>Nama</th>
                         <th>Username</th>
+                        <th>Keterangan</th>
+                        <th>Alamat</th>
+                        <th>Foto</th>
                         <th>Status</th>
+                        <th>Confirm</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -24,29 +28,57 @@
                     <tr>
                         <td>{{ $p->namapeminjam }}</td>
                         <td>{{ $p->username }}</td>
+                        <td>{{ ucfirst($p->keterangan) }}</td>
+                        <td>{{ $p->alamat }}</td>
                         <td>
-                            <span class="badge {{ $p->status == 'pending' ? 'badge-warning' : ($p->status == 'approved' ? 'badge-success' : 'badge-danger') }}">
+                            @if($p->foto)
+                            <img src="{{ asset('storage/' . $p->foto) }}" alt="Foto Peminjam" width="50">
+                            @else
+                            Tidak ada foto
+                            @endif
+                        </td>
+                        <td>
+                            <span class="badge {{ $p->status == 'pending' ? 'badge-warning' : ($p->status == 'setujui' ? 'badge-success' : 'badge-danger') }}">
                                 {{ ucfirst($p->status) }}
                             </span>
                         </td>
                         <td>
-                            <a href="{{ route('peminjam.show', $p->id) }}" class="btn btn-info btn-sm">Lihat</a>
-                            <a href="{{ route('peminjam.edit', $p->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('peminjam.destroy', $p->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peminjam ini?');">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                            </form>
+                            <!-- Tombol Setujui & Tolak (jika status pending) -->
                             @if ($p->status == 'pending')
-                                <form action="{{ route('peminjam.approve', $p->id) }}" method="POST" class="d-inline">
-                                    @csrf @method('PUT')
-                                    <button type="submit" class="btn btn-success btn-sm">Setujui</button>
-                                </form>
-                                <form action="{{ route('peminjam.reject', $p->id) }}" method="POST" class="d-inline">
-                                    @csrf @method('PUT')
-                                    <button type="submit" class="btn btn-secondary btn-sm">Tolak</button>
-                                </form>
+                            <form action="{{ route('peminjam.approve', $p->id) }}" method="POST" class="d-inline">
+                                @csrf @method('PUT')
+                                <button type="submit" class="btn btn-success btn-sm" title="Setujui">
+                                    <i class="fas fa-check"></i> <!-- Ikon centang hijau -->
+                                </button>
+                            </form>
+                            <form action="{{ route('peminjam.reject', $p->id) }}" method="POST" class="d-inline">
+                                @csrf @method('PUT')
+                                <button type="submit" class="btn btn-secondary btn-sm" title="Tolak">
+                                    <i class="fas fa-times"></i> <!-- Ikon silang abu-abu -->
+                                </button>
+                            </form>
                             @endif
                         </td>
+                        <td>
+                            <!-- Tombol Lihat -->
+                            <a href="{{ route('peminjam.show', $p->id) }}" class="btn btn-info btn-sm" title="Lihat">
+                                <i class="fas fa-eye"></i> <!-- Ikon mata -->
+                            </a>
+
+                            <!-- Tombol Edit -->
+                            <a href="{{ route('peminjam.edit', $p->id) }}" class="btn btn-warning btn-sm" title="Edit">
+                                <i class="fas fa-edit"></i> <!-- Ikon pensil -->
+                            </a>
+
+                            <!-- Tombol Hapus -->
+                            <form action="{{ route('peminjam.destroy', $p->id) }}" method="POST" class="d-inline delete-form">
+                                @csrf @method('DELETE')
+                                <button type="button" class="btn btn-danger btn-sm delete-btn" title="Hapus">
+                                    <i class="fas fa-trash"></i> <!-- Ikon tempat sampah -->
+                                </button>
+                            </form>
+                        </td>
+
                     </tr>
                     @endforeach
                 </tbody>
@@ -55,3 +87,22 @@
     </div>
 </div>
 @endsection
+
+<script>
+    function confirmDelete(adminId) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data admin akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + adminId).submit();
+            }
+        });
+    }
+</script>

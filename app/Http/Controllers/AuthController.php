@@ -28,18 +28,18 @@ class AuthController extends Controller
             'nama' => 'required|string|max:255',
             'username' => 'required|string|unique:admin,username|unique:peminjam,username',
             'password' => 'required|min:6',
-            'role' => 'required|in:admin,peminjam',
+            'role' => 'required|in:admin,petugas,peminjam',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Proses penyimpanan berdasarkan role
-        if ($request->role === 'admin') {
+        // Simpan berdasarkan role
+        if ($request->role === 'admin' || $request->role === 'petugas') {
             $data = [
-                'namaadmin' => $request->nama, // Sesuai dengan database
+                'namaadmin' => $request->nama,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
-                'status' => 'pending',
-                'role' => 'admin',
+                'status' => 'pending', // Menunggu persetujuan admin
+                'role' => $request->role, // Bisa admin atau petugas
             ];
 
             // Simpan foto jika ada
@@ -53,7 +53,7 @@ class AuthController extends Controller
             Admin::create($data);
         } else {
             Peminjam::create([
-                'namapeminjam' => $request->nama, // Sesuai dengan database
+                'namapeminjam' => $request->nama,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'status' => 'pending',
@@ -70,31 +70,31 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // Cek apakah user adalah Admin
-        $admin = Admin::where('username', $request->username)->first();
-        if ($admin && Auth::guard('web')->attempt($credentials)) { // Gunakan guard 'web' untuk admin
-            if ($admin->status !== 'setujui') {
+        // Cek apakah user adalah Admin atau Petugas
+        $adminOrPetugas = Admin::where('username', $request->username)->first();
+        if ($adminOrPetugas && Auth::guard('web')->attempt($credentials)) {
+            if ($adminOrPetugas->status !== 'setujui') {
                 Auth::logout();
                 return back()->withErrors(['loginError' => "Akun belum disetujui oleh admin."]);
             }
-            session(['role' => 'admin']);
-            return redirect()->route('dashboard');
+
+            session(['role' => $adminOrPetugas->role]);
+
+            // Admin & Petugas diarahkan ke dashboard yang sama
+            if ($adminOrPetugas->role === 'admin' || $adminOrPetugas->role === 'petugas') {
+                return redirect()->route('dashboard');
+            }
         }
 
         // Cek apakah user adalah Peminjam
         $peminjam = Peminjam::where('username', $request->username)->first();
-        if ($peminjam && Auth::guard('peminjam')->attempt($credentials)) { // Gunakan guard 'peminjam'
+        if ($peminjam && Auth::guard('peminjam')->attempt($credentials)) {
             if ($peminjam->status !== 'setujui') {
                 Auth::logout();
                 return back()->withErrors(['loginError' => "Akun peminjam belum disetujui oleh admin."]);
             }
             session(['role' => 'peminjam']);
-
-            if (Route::has('peminjam.index')) {
-                return redirect()->route('peminjam.index');
-            } else {
-                return redirect('/')->with('error', 'Route peminjam.index tidak ditemukan.');
-            }
+            return redirect()->route('peminjam.index');
         }
 
         return back()->withErrors(['loginError' => 'Username atau password salah.']);

@@ -16,6 +16,9 @@ class Peminjam extends Authenticatable
         'username',
         'password',
         'status',
+        'keterangan',
+        'alamat',
+        'foto',
         'setujui',
     ];
 

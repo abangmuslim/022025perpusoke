@@ -17,7 +17,7 @@
             <div class="col-md-4 text-center">
                 <strong>Foto:</strong><br>
                 @if($admin->foto)
-                <img src="{{ asset('uploads/' . $admin->foto) }}" width="150" class="img-fluid rounded shadow-sm">
+                <img src="{{ asset('uploads/' . $admin->foto) }}" width="300" class="img-fluid rounded shadow-sm">
                 @else
                 <p>Foto tidak tersedia</p>
                 @endif

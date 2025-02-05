@@ -91,7 +91,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Admin</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('admin.index') }}">Index</a> <!-- Mengarahkan ke halaman admin index -->
+                        <a class="dropdown-item" href="{{ route('admin.index') }}">Daftar Admin</a> <!-- Mengarahkan ke halaman admin index -->
                         <a class="dropdown-item" href="{{ route('admin.create') }}">Tambah</a> <!-- Mengarahkan ke halaman admin create -->
                         <a class="dropdown-item" href="#">Tampil</a> <!-- Dibiarkan kosong atau disesuaikan nanti -->
                     </div>
@@ -99,10 +99,17 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Peminjam</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('login') }}">Login Peminjam</a>
-                        <a class="dropdown-item" href="{{ route('register') }}">Registrasi Peminjam</a>
                         <a class="dropdown-item" href="{{ route('peminjam.index') }}">Daftar Peminjam</a>
                         <a class="dropdown-item" href="{{ route('peminjam.create') }}">Tambah Peminjam</a>
+                        <div class="dropdown-divider"></div>
+                        <div class="px-3">
+                            <a class="btn btn-success btn-block text-white font-weight-bold" style="color: white !important;" href="{{ route('login') }}">
+                                Login
+                            </a>
+                            <a class="btn btn-danger btn-block text-white font-weight-bold mt-2" style="color: white !important;" href="{{ route('register') }}">
+                                Registrasi
+                            </a>
+                        </div>
                     </div>
                 </li>
 
@@ -170,6 +177,33 @@
             $('body').addClass('sidebar-collapse'); // Collapse sidebar jika masih aktif
             $('.main-sidebar').remove(); // Hapus elemen sidebar jika ada
             $('.content-wrapper').css('margin-left', '0'); // Pastikan tidak ada margin kiri
+        });
+    </script>
+    <!-- Tambahkan script SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    let form = this.closest('form');
+
+                    Swal.fire({
+                        title: "Apakah Anda yakin?",
+                        text: "Data akan dihapus secara permanen!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#3085d6",
+                        confirmButtonText: "Ya, Hapus!",
+                        cancelButtonText: "Batal"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit(); // Jika dikonfirmasi, form akan dikirim
+                        }
+                    });
+                });
+            });
         });
     </script>
 </body>

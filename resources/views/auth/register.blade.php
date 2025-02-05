@@ -62,9 +62,11 @@
                             <select name="role" class="form-control" required>
                                 <option value="">-- Pilih Role --</option>
                                 <option value="admin">Admin</option>
+                                <option value="petugas">Petugas</option>
                                 <option value="peminjam">Peminjam</option>
                             </select>
                         </div>
+
 
                         <div class="form-group">
                             <label for="foto">Foto (Opsional)</label>
