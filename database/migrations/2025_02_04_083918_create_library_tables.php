@@ -42,11 +42,15 @@ class CreateLibraryTables extends Migration
         Schema::create('buku', function (Blueprint $table) {
             $table->id();
             $table->foreignId('idkategori')->constrained('kategori')->onDelete('cascade');
+            $table->string('nomorseri');
             $table->string('judul');
             $table->string('penerbit');
             $table->string('pengarang');
             $table->year('tahun');
             $table->enum('status', ['tersedia', 'dipinjam'])->default('tersedia');
+            $table->enum('kondisi', ['rusak', 'bagus'])->default('tersedia');
+            $table->string('rak');
+            $table->string('foto');
             $table->timestamps();
         });
 

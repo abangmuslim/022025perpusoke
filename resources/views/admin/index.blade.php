@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card">
-    <div class="card-header">
+    <div class="card-header" style="background-color: #1B03A3; color: white; font-weight: bold;">
         <h3 class="card-title">Daftar Admin</h3>
         <div class="card-tools">
             <a href="{{ route('admin.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Admin</a>
@@ -37,7 +37,6 @@
                         <span class="badge badge-danger">Ditolak</span>
                         @endif
                     </td>
-
                     <td>
                         @if($admin->role == 'admin')
                         <span class="badge badge-danger">{{ ucfirst($admin->role) }}</span>
@@ -47,7 +46,6 @@
                         <span class="badge badge-secondary">{{ ucfirst($admin->role) }}</span>
                         @endif
                     </td>
-
                     <td>
                         @if($admin->foto)
                         <img src="{{ asset('uploads/' . $admin->foto) }}" class="img-thumbnail" width="50">
@@ -61,19 +59,18 @@
                             @csrf
                             @method('PUT')
                             <button type="submit" class="btn btn-success btn-sm">
-                                <i class="fas fa-check"></i> <!-- Ikon Centang Hijau -->
+                                <i class="fas fa-check"></i>
                             </button>
                         </form>
                         <form action="{{ route('admin.reject', $admin->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('PUT')
                             <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="fas fa-times"></i> <!-- Ikon Silang Merah -->
+                                <i class="fas fa-times"></i>
                             </button>
                         </form>
                         @endif
                     </td>
-
                     <td>
                         <a href="{{ route('admin.show', $admin->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                         <a href="{{ route('admin.edit', $admin->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
@@ -81,10 +78,9 @@
                             @csrf
                             @method('DELETE')
                             <button type="button" class="btn btn-danger btn-sm delete-btn" data-id="{{ $admin->id }}">
-                                <i class="fas fa-trash"></i> <!-- Hanya ikon, tanpa teks -->
+                                <i class="fas fa-trash"></i>
                             </button>
                         </form>
-
                     </td>
                 </tr>
                 @endforeach

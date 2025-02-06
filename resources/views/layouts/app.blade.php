@@ -14,25 +14,35 @@
     <!-- SWEETALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- DATATABLES -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
         .navbar-custom {
-            background-color: #5D4037 !important;
-            /* Dark Brown */
+            background-color: #0D47A1 !important;
+            /* Biru Tua */
         }
 
         .navbar-custom .nav-link,
         .navbar-custom .navbar-brand {
-            color: #ffffff !important;
+            color: #FFFFFF !important;
+            /* Putih Cerah */
         }
 
         .dropdown-menu {
-            background-color: #ffffff !important;
-            /* White */
+            background-color: #BBDEFB !important;
+            /* Biru Muda */
         }
 
         .dropdown-menu a {
-            color: #5D4037 !important;
-            /* Dark Brown */
+            color: #000000 !important;
+            /* Hitam */
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #1976D2 !important;
+            /* Warna Hover Kontras */
+            color: #FFFFFF !important;
         }
 
         body,
@@ -82,18 +92,18 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand navbar-custom">
-        <a class="navbar-brand font-weight-bold" href="{{ route('dashboard') }}">Dashboard</a>
+        <a class="navbar-brand font-weight-bold ml-3" href="{{ route('dashboard') }}">Dashboard</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ml-3"> <!-- Menambahkan margin kiri -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Admin</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('admin.index') }}">Daftar Admin</a> <!-- Mengarahkan ke halaman admin index -->
-                        <a class="dropdown-item" href="{{ route('admin.create') }}">Tambah</a> <!-- Mengarahkan ke halaman admin create -->
-                        <a class="dropdown-item" href="#">Tampil</a> <!-- Dibiarkan kosong atau disesuaikan nanti -->
+                        <a class="dropdown-item" href="{{ route('admin.index') }}">Daftar Admin</a>
+                        <a class="dropdown-item" href="{{ route('admin.create') }}">Tambah</a>
+                        <a class="dropdown-item" href="#">Tampil</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -103,26 +113,20 @@
                         <a class="dropdown-item" href="{{ route('peminjam.create') }}">Tambah Peminjam</a>
                         <div class="dropdown-divider"></div>
                         <div class="px-3">
-                            <a class="btn btn-success btn-block text-white font-weight-bold" style="color: white !important;" href="{{ route('login') }}">
-                                Login
-                            </a>
-                            <a class="btn btn-danger btn-block text-white font-weight-bold mt-2" style="color: white !important;" href="{{ route('register') }}">
-                                Registrasi
-                            </a>
+                            <a class="btn btn-success btn-block text-white font-weight-bold" href="{{ route('login') }}">Login</a>
+                            <a class="btn btn-danger btn-block text-white font-weight-bold mt-2" href="{{ route('register') }}">Registrasi</a>
                         </div>
                     </div>
                 </li>
-
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Buku</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Index</a>
+                        <a class="dropdown-item" href="{{ route('buku.index') }}">Daftar Buku</a>
+                        <a class="dropdown-item" href="{{ route('kategori.index') }}">Kategori</a>
                         <a class="dropdown-item" href="#">Tambah</a>
                         <a class="dropdown-item" href="#">Tampil</a>
                     </div>
                 </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Peminjaman</a>
                     <div class="dropdown-menu">
@@ -146,7 +150,7 @@
                     <img src="{{ asset('path/to/default-photo.jpg') }}" alt="Admin Photo" class="img-circle" style="width: 30px; height: 30px; object-fit: cover;">
                     @endif
                     <span>{{ Auth::user()->namaadmin }}</span>
-                    <span class="badge badge-success">{{ ucfirst(Auth::user()->role) }}</span> <!-- Mengganti status dengan role -->
+                    <span class="badge badge-success">{{ ucfirst(Auth::user()->role) }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ route('admin.profile') }}">Profil</a>
@@ -157,8 +161,8 @@
                 </div>
             </li>
         </div>
-
     </nav>
+
 
     <!-- Content Wrapper -->
     <div class="content-wrapper">
@@ -206,6 +210,8 @@
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin; // Pastikan model Admin diimpor
 use Illuminate\Http\Request;
+use App\Models\Admin;
+use App\Models\Peminjam;
+use App\Models\Buku;
+use App\Models\Peminjaman;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Menghitung jumlah admin
+        // Ambil jumlah data dari setiap model
         $adminCount = Admin::count();
-        
-        // Mengirim jumlah admin ke view
-        return view('dashboard.index', compact('adminCount'));
+        $peminjamCount = Peminjam::count();
+        $bukuCount = Buku::count();
+        $peminjamanCount = Peminjaman::count();
+
+        // Kirim data ke view dashboard
+        return view('dashboard', compact('adminCount', 'peminjamCount', 'bukuCount', 'peminjamanCount'));
     }
 }

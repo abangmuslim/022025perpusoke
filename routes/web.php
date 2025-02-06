@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PeminjamController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\BukuController;
 
 // Redirect ke login jika mengakses root
 Route::get('/', function () {
@@ -50,3 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{id}/reject', [PeminjamController::class, 'reject'])->name('peminjam.reject');
     });
 });
+
+
+Route::resource('kategori', KategoriController::class);
+Route::resource('buku', BukuController::class);
