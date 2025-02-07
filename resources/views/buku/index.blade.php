@@ -8,11 +8,9 @@
             <a href="{{ route('buku.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Buku</a>
         </div>
     </div>
+    <!-- /.card-header -->
     <div class="card-body">
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        <table class="table table-bordered">
+        <table id="example1" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>No</th>
@@ -32,7 +30,7 @@
             <tbody>
                 @foreach($buku as $index => $item)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->nomorseri }}</td>
                     <td>{{ $item->judul }}</td>
                     <td>{{ $item->kategori->namakategori }}</td>
@@ -65,14 +63,34 @@
             </tbody>
         </table>
     </div>
+    <!-- /.card-body -->
 </div>
 @endsection
 
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    $(document).ready(function() {
+        $('#bukuTable').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+                "lengthMenu": "Tampilkan _MENU_ entri",
+                "search": "Cari:",
+                "paginate": {
+                    "previous": "Sebelumnya",
+                    "next": "Berikutnya"
+                }
+            }
+        });
+    });
+
     document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             Swal.fire({
                 title: 'Apakah Anda yakin?',
                 text: "Buku ini akan dihapus secara permanen!",

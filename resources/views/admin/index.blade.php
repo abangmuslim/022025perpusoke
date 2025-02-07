@@ -3,13 +3,14 @@
 @section('content')
 <div class="card">
     <div class="card-header" style="background-color: #1B03A3; color: white; font-weight: bold;">
-        <h3 class="card-title">Daftar Admin</h3>
+        <h3 class="card-title">Daftar Buku</h3>
         <div class="card-tools">
-            <a href="{{ route('admin.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Admin</a>
+            <a href="{{ route('buku.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Buku</a>
         </div>
     </div>
+    <!-- /.card-header -->
     <div class="card-body">
-        <table class="table table-bordered">
+        <table id="example1" class="table table-bordered ">
             <thead>
                 <tr>
                     <th>No</th>
@@ -88,4 +89,5 @@
         </table>
     </div>
 </div>
+
 @endsection

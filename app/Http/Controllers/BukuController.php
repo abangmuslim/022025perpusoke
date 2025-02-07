@@ -9,11 +9,22 @@ use Illuminate\Support\Facades\Storage;
 
 class BukuController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $buku = Buku::with('kategori')->get();
-        return view('buku.index', compact('buku'));
+        $search = $request->input('search');
+        $perPage = $request->input('per_page', 10); // Default 10 baris per halaman
+
+        $buku = Buku::with('kategori')
+            ->when($search, function ($query, $search) {
+                return $query->where('judul', 'like', "%$search%");
+            })
+            ->paginate($perPage);
+
+        $kategori = Kategori::all();
+
+        return view('buku.index', compact('buku', 'kategori'));
     }
+
 
     public function create()
     {
@@ -60,11 +71,21 @@ class BukuController extends Controller
         return view('buku.edit', compact('buku', 'kategori'));
     }
 
+    // public function edit($id)
+    // {
+    //     $buku = Buku::find($id);
+    //     if (!$buku) {
+    //         return response()->json(['error' => 'Buku tidak ditemukan'], 404);
+    //     }
+    //     return response()->json($buku);
+    // }
+
+
     public function update(Request $request, Buku $buku)
     {
         $request->validate([
             'idkategori' => 'required',
-            'nomorseri' => 'required|unique:buku,nomorseri,'.$buku->id,
+            'nomorseri' => 'required|unique:buku,nomorseri,' . $buku->id,
             'judul' => 'required',
             'penerbit' => 'required',
             'pengarang' => 'required',
@@ -76,7 +97,7 @@ class BukuController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            Storage::delete('public/'.$buku->foto);
+            Storage::delete('public/' . $buku->foto);
             $fotoPath = $request->file('foto')->store('buku', 'public');
             $buku->foto = $fotoPath;
         }
@@ -103,7 +124,7 @@ class BukuController extends Controller
 
     public function destroy(Buku $buku)
     {
-        Storage::delete('public/'.$buku->foto);
+        Storage::delete('public/' . $buku->foto);
         $buku->delete();
         return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus');
     }

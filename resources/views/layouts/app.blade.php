@@ -14,9 +14,12 @@
     <!-- SWEETALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- DATATABLES -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+
+
     <style>
         .navbar-custom {
             background-color: #0D47A1 !important;
@@ -44,6 +47,75 @@
             /* Warna Hover Kontras */
             color: #FFFFFF !important;
         }
+
+        /* Kategori Menu */
+        .kategori-menu {
+            background-color: #1976D2 !important;
+            /* Biru Tua */
+            color: #FFFFFF !important;
+            /* Teks Putih */
+            padding: 8px 12px;
+            border-radius: 8px;
+            /* Agar lebih smooth */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* Efek transisi smooth */
+        }
+
+        /* Hover Kategori: Berubah jadi Biru Muda */
+        .kategori-menu:hover {
+            background-color: #BBDEFB !important;
+            /* Biru Muda */
+            color: #000000 !important;
+            /* Teks jadi hitam agar kontras */
+            border: 1px solid #1976D2 !important;
+        }
+
+        /* Badge Custom */
+        .kategori-menu .badge {
+            background-color: #FFC107;
+            /* Warna badge kuning agar kontras */
+            color: #000000;
+            /* Warna teks badge */
+            font-size: 14px;
+            padding: 6px 10px;
+            border-radius: 8px;
+        }
+
+        /* Agar submenu muncul dengan benar */
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+            display: none;
+            position: absolute;
+        }
+
+        .dropdown-submenu:hover>.dropdown-menu {
+            display: block;
+        }
+
+        /* Badge lebih besar */
+        .badge-custom {
+            font-size: 16px;
+            /* Perbesar teks badge */
+            padding: 10px 15px;
+            /* Tambahkan padding */
+            border-radius: 8px;
+            /* Bikin lebih smooth */
+            background-color: #FFC107 !important;
+            /* Warna kuning */
+            color: #000 !important;
+            /* Warna teks hitam */
+        }
+
+
 
         body,
         html {
@@ -97,7 +169,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-3"> <!-- Menambahkan margin kiri -->
+            <ul class="navbar-nav ml-3">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Admin</a>
                     <div class="dropdown-menu">
@@ -122,11 +194,23 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Buku</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('buku.index') }}">Daftar Buku</a>
-                        <a class="dropdown-item" href="{{ route('kategori.index') }}">Kategori</a>
                         <a class="dropdown-item" href="#">Tambah</a>
                         <a class="dropdown-item" href="#">Tampil</a>
+
+                        <!-- Submenu -->
+                        <div class="dropdown-submenu">
+                            <a class="dropdown-item kategori-menu dropdown-toggle text-white font-weight-bold" href="#" data-toggle="dropdown">
+                                <span class="badge badge-custom">KATEGORI BUKU >></span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('kategori.index') }}">Daftar Kategori</a>
+                                <a class="dropdown-item" href="{{ route('kategori.create') }}">Tambah Kategori</a>
+                            </div>
+                        </div>
+
                     </div>
                 </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">Peminjaman</a>
                     <div class="dropdown-menu">
@@ -140,7 +224,6 @@
                 </li>
             </ul>
         </div>
-        <!-- User Info and Logout -->
         <div class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -164,6 +247,11 @@
     </nav>
 
 
+
+
+
+
+
     <!-- Content Wrapper -->
     <div class="content-wrapper">
         <section class="content">
@@ -183,8 +271,30 @@
             $('.content-wrapper').css('margin-left', '0'); // Pastikan tidak ada margin kiri
         });
     </script>
+
+
+    <!-- DataTables & Plugins -->
+    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    
+    <!-- DataTables & Plugins Bootstrap 5-->
+    <script src="{{ asset('plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap5.min.js') }}"></script>
+
+
+
+
     <!-- Tambahkan script SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll('.delete-btn').forEach(button => {
@@ -210,7 +320,54 @@
             });
         });
     </script>
+    <!-- Tambahkan script Dropdown Navbar -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dropdown-submenu a.dropdown-toggle').on("click", function(e) {
+                if (!$(this).next('div').hasClass('show')) {
+                    $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+                }
+                var $subMenu = $(this).next("div");
+                $subMenu.toggleClass('show');
+
+                $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function() {
+                    $('.dropdown-submenu .dropdown-menu').removeClass("show");
+                });
+                return false;
+            });
+        });
+    </script>
+
+    <!-- Tambahkan script Data Table -->
+    <script>
+        $(document).ready(function() {
+            let table = $('#example1').DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                "searching": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"], // Tombol Export
+                "language": {
+                    "lengthMenu": "Tampilkan _MENU_ entri",
+                    "zeroRecords": "Data tidak ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    "infoEmpty": "Tidak ada data tersedia",
+                    "search": "Cari:",
+                    "paginate": {
+                        "previous": "Sebelumnya",
+                        "next": "Selanjutnya"
+                    }
+                }
+            });
+
+            // Tempatkan tombol di dalam container yang benar untuk Bootstrap 5
+            table.buttons().container().appendTo('#example1_wrapper .dt-buttons');
+        });
+    </script>
 
 </body>
 
