@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PeminjamController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\PeminjamImportExportController;
 
 // Redirect ke login jika mengakses root
 Route::get('/', function () {
@@ -50,6 +51,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{id}', [PeminjamController::class, 'destroy'])->name('peminjam.destroy');
         Route::put('/{id}/approve', [PeminjamController::class, 'approve'])->name('peminjam.approve');
         Route::put('/{id}/reject', [PeminjamController::class, 'reject'])->name('peminjam.reject');
+
+
+        Route::get('/peminjam/export', [PeminjamImportExportController::class, 'export'])->name('peminjam.export');
+        Route::post('/peminjam/import', [PeminjamImportExportController::class, 'import'])->name('peminjam.import');
+        
     });
 });
 

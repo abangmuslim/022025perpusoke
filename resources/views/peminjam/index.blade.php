@@ -8,10 +8,18 @@
         <h3 class="card-title">Daftar Peminjam</h3>
         <div class="card-tools">
             <a href="{{ route('peminjam.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Peminjam</a>
+            <a href="{{ route('peminjam.export') }}" class="btn btn-success btn-sm">Export Excel</a>
+
+            <form action="{{ route('peminjam.import') }}" method="POST" enctype="multipart/form-data" style="display:inline-block;">
+                @csrf
+                <input type="file" name="file" required>
+                <button type="submit" class="btn btn-primary btn-sm">Import Excel</button>
+            </form>
+
         </div>
     </div>
     <div class="card-body">
-        <table class="table table-bordered">
+        <table id="example1" class="table table-bordered">
             <thead>
                 <tr>
                     <th>No</th>
